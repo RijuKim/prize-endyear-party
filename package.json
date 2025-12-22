@@ -1,0 +1,16 @@
+{
+  "name": "prize-draw",
+  "version": "1.0.0",
+  "description": "송년회 경품추첨 앱",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "canvas-confetti": "^1.9.2"
+  },
+  "devDependencies": {
+    "vite": "^5.0.0"
+  }
+}
