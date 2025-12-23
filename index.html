@@ -1060,18 +1060,24 @@
         prizeNameEl.textContent = prize.name;
         winnersSoFarEl.innerHTML = '';
 
+        // 경품 개수가 10개를 초과하면 빠른 모드로 전환
+        const isFastMode = prize.qty > 10;
+        const iterations = isFastMode ? 12 : 25;
+        const baseDelay = isFastMode ? 20 : 40;
+        const delayIncrement = isFastMode ? 4 : 8;
+        const winnerPauseTime = isFastMode ? 400 : 1000;
+
         for (let i = 0; i < winners.length; i++) {
           const winner = winners[i];
           progressEl.textContent = `${i + 1} / ${winners.length} 추첨 중...`;
           currentNameEl.classList.remove('winner');
 
           // Slot machine effect
-          let iterations = 25;
           for (let j = 0; j < iterations; j++) {
             const randomName =
               allAvailable[Math.floor(Math.random() * allAvailable.length)];
             currentNameEl.textContent = randomName;
-            await sleep(40 + j * 8); // Slow down gradually
+            await sleep(baseDelay + j * delayIncrement); // Slow down gradually
           }
 
           // Show winner
@@ -1084,11 +1090,11 @@
           badge.textContent = winner;
           winnersSoFarEl.appendChild(badge);
 
-          await sleep(1000);
+          await sleep(winnerPauseTime);
         }
 
         progressEl.textContent = '추첨 완료!';
-        await sleep(800);
+        await sleep(isFastMode ? 400 : 800);
 
         overlay.classList.remove('active');
       }
